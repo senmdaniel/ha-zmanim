@@ -1,8 +1,6 @@
 from homeassistant.helpers.entity import Entity
 from .zmanim import get_zman_times
 
-DOMAIN = "zmanim"
-
 async def async_setup_platform(hass, config, add_entities, discovery_info=None):
     add_entities([ZmanimSensor()])
 
@@ -13,16 +11,16 @@ class ZmanimSensor(Entity):
 
     @property
     def name(self):
-        return "Zmanim Today"
+        return "Zmanim Test"
 
     @property
     def unique_id(self):
-        return "zmanim_today"
+        return "zmanim_test"
 
     @property
     def state(self):
-        return self._state or "unknown"
+        return self._state
 
     async def async_update(self):
-        times = get_zman_times()
-        self._state = times.get("sunrise", "unknown")
+        data = get_zman_times("Amsterdam")
+        self._state = data["sunrise"]
