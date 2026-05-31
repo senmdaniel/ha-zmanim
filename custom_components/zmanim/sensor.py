@@ -1,26 +1,19 @@
 from homeassistant.components.sensor import SensorEntity
-
-print("ZMANIM SENSOR LOADED")
-
-async def async_setup_platform(
-    hass,
-    config,
-    async_add_entities,
-    discovery_info=None,
-):
-    async_add_entities([HelloWorldSensor()])
+from datetime import date
+from .app.core.zmanim import calculate_zmanim
 
 
-class HelloWorldSensor(SensorEntity):
+async def async_setup_entry(hass, config_entry, async_add_entities):
+    async_add_entities([ZmanimSensor()])
 
-    @property
-    def name(self):
-        return "Zmanim Hello"
 
-    @property
-    def unique_id(self):
-        return "zmanim_hello"
+class ZmanimSensor(SensorEntity):
 
-    @property
-    def native_value(self):
-        return "Hello World"
+    def __init__(self):
+        self._attr_name = "Zmanim"
+        self._attr_unique_id = "zmanim_main"
+
+        result = calculate_zmanim({}, date.today())
+
+        self._attr_native_value = result["zmanim"]["shkia"]["time"]
+        self._attr_extra_state_attributes = result["zmanim"]
