@@ -1,22 +1,19 @@
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.helpers.entity import Entity
+from .const import DOMAIN
 
+async def async_setup_platform(hass, config, add_entities, discovery_info=None):
+    add_entities([MySensor()])
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
-    add_entities([ZmanimSensor(hass)])
-
-
-class ZmanimSensor(SensorEntity):
-
-    def __init__(self, hass):
-        self.hass = hass
-        self._attr_name = "Zmanim"
-        self._attr_unique_id = "zmanim_main"
+class MySensor(Entity):
 
     @property
-    def native_value(self):
-        data = self.hass.data.get("zmanim", {})
-        return data.get("zmanim", {}).get("shkia", {}).get("time", "unknown")
+    def name(self):
+        return "My Integration Status"
 
     @property
-    def extra_state_attributes(self):
-        return self.hass.data.get("zmanim", {}).get("zmanim", {})
+    def state(self):
+        return "running"
+
+    @property
+    def unique_id(self):
+        return "my_integration_status"
