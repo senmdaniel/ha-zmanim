@@ -2,8 +2,9 @@
   "domain": "my_integration",
   "name": "My Integration",
   "version": "1.0.0",
-  "documentation": "https://github.com/your/repo",
-  "requirements": [],
+  "documentation": "https://github.com/senmdaniel/ha-zmanim",
   "dependencies": [],
-  "codeowners": []
+  "codeowners": ["@senmdaniel"],
+  "requirements": [],
+  "iot_class": "local_polling"
 }
