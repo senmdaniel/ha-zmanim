@@ -1,11 +1,1 @@
-{
-  "domain": "zmanim",
-  "name": "Zmanim",
-  "version": "1.0.0",
-  "documentation": "https://github.com/senmdaniel/ha-zmanim",
-  "dependencies": [],
-  "codeowners": ["@senmdaniel"],
-  "requirements": [],
-  "iot_class": "calculated",
-  "config_flow": true
-}
+"config_flow": true
