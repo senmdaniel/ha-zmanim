@@ -8,3 +8,7 @@ Home Assistant integratie voor Zmanim.
 - JSON test
 - Later: Zmanim berekeningen
 - Later: Home Assistant integratie
+
+
+
+https://github.com/senmdaniel/ha-zmanim
