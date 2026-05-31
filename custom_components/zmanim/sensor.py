@@ -1,5 +1,6 @@
 from homeassistant.components.sensor import SensorEntity
 
+print("ZMANIM SENSOR LOADED")
 
 async def async_setup_platform(
     hass,
