@@ -1,1 +1,1 @@
-"""HA Zmanim."""
+"""HA Zmanim Pro"""
