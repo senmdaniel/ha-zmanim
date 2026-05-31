@@ -1,10 +1,9 @@
 from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 
-async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up integration via YAML (fallback mode)."""
-    
-    hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN]["status"] = "loaded"
+DOMAIN = "zmanim"
 
+async def async_setup(hass: HomeAssistant, config: dict) -> bool:
+    hass.data.setdefault(DOMAIN, {})
+    hass.data[DOMAIN]["loaded"] = True
     return True
