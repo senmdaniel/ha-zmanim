@@ -1,3 +1,6 @@
 {
-  "name": "HA Zmanim Pro"
+  "name": "Zmanim",
+  "content_in_root": false,
+  "country": "NL",
+  "homeassistant": "2023.0.0"
 }
