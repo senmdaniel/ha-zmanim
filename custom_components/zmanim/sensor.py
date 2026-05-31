@@ -1,8 +1,8 @@
 from homeassistant.components.sensor import SensorEntity
 
 
-async def async_setup_entry(hass, config_entry, async_add_entities):
-    async_add_entities([ZmanimSensor(hass)])
+def setup_platform(hass, config, add_entities, discovery_info=None):
+    add_entities([ZmanimSensor(hass)])
 
 
 class ZmanimSensor(SensorEntity):
