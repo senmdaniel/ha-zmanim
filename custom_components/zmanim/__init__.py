@@ -1,14 +1,10 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
-DOMAIN = "zmanim"
-
 PLATFORMS = ["sensor"]
-
 
 async def async_setup(hass: HomeAssistant, config: dict):
     return True
-
 
 async def async_setup_entry(
     hass: HomeAssistant,
