@@ -1,9 +1,9 @@
 {
-  "domain": "zmanim",
-  "name": "HA Zmanim",
-  "version": "0.0.1",
-  "documentation": "https://github.com/senmdaniel/ha-zmanim",
+  "domain": "my_integration",
+  "name": "My Integration",
+  "version": "1.0.0",
+  "documentation": "https://github.com/your/repo",
   "requirements": [],
-  "codeowners": ["@senmdaniel"],
-  "platforms": ["sensor"]
+  "dependencies": [],
+  "codeowners": []
 }
