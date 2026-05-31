@@ -1,10 +1,10 @@
 {
-  "domain": "my_integration",
-  "name": "My Integration",
+  "domain": "zmanim",
+  "name": "Zmanim",
   "version": "1.0.0",
   "documentation": "https://github.com/senmdaniel/ha-zmanim",
   "dependencies": [],
   "codeowners": ["@senmdaniel"],
   "requirements": [],
-  "iot_class": "local_polling"
+  "iot_class": "calculated"
 }
