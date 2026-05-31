@@ -1,14 +1,10 @@
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
+
+DOMAIN = "zmanim"
 
 
-async def async_setup_entry(
-    hass: HomeAssistant,
-    entry: ConfigEntry,
-    async_add_entities: AddEntitiesCallback,
-):
+async def async_setup_entry(hass, entry, async_add_entities):
     async_add_entities([ZmanimSensor()])
 
 
@@ -18,4 +14,4 @@ class ZmanimSensor(SensorEntity):
 
     @property
     def native_value(self):
-        return "TEST-06:00"
+        return "OK"
