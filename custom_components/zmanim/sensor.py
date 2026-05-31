@@ -1,10 +1,13 @@
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-async def async_setup_platform(
-    hass,
-    config,
-    async_add_entities,
-    discovery_info=None,
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ):
     async_add_entities([ZmanimSensor()])
 
