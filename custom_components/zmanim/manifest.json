@@ -1,0 +1,8 @@
+{
+  "domain": "zmanim",
+  "name": "HA Zmanim",
+  "version": "0.0.1",
+  "documentation": "https://github.com/senmdaniel/ha-zmanim",
+  "requirements": [],
+  "codeowners": ["@senmdaniel"]
+}
