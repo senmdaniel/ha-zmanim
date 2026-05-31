@@ -1,0 +1,6 @@
+{
+  "name": "Zmanim",
+  "content_in_root": false,
+  "country": ["BE", "NL"],
+  "homeassistant": "2025.1.0"
+}
