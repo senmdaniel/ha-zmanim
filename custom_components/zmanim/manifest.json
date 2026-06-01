@@ -1,7 +1,7 @@
 {
   "domain": "zmanim",
   "name": "Zmanim",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "documentation": "https://github.com/senmdaniel/ha-zmanim",
   "requirements": ["astral>=3.2"],
   "codeowners": ["@senmdaniel"],
