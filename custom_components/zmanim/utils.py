@@ -1,10 +1,13 @@
-from datetime import datetime, date
+from datetime import date
 from astral import LocationInfo
 from astral.sun import sun
+from zoneinfo import ZoneInfo
 
 def calculate_zmanim(lat: float, lon: float, method: str = "gra", target_date: date | None = None):
     if target_date is None:
         target_date = date.today()
+
+    tz = ZoneInfo("Europe/Paris")
 
     location = LocationInfo(
         name="Home",
@@ -14,9 +17,8 @@ def calculate_zmanim(lat: float, lon: float, method: str = "gra", target_date: d
         longitude=lon,
     )
 
-    s = sun(location.observer, date=target_date, tzinfo=location.timezone)
+    s = sun(location.observer, date=target_date, tzinfo=tz)
 
-    # basis zmanim (simpel maar uitbreidbaar)
     return {
         "alot_hashachar": s["dawn"],
         "netz": s["sunrise"],
