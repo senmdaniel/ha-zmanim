@@ -1,21 +1,32 @@
-from datetime import datetime
+from datetime import date
 from homeassistant.components.sensor import SensorEntity
 
-from .core.hebrew_calendar import get_hebrew_date
+from .core.zmanim_engine import calculate_zmanim
+
+
+DEFAULT_CONFIG = {
+    "city": "Antwerp",
+    "timezone": "Europe/Brussels",
+    "latitude": 51.2194,
+    "longitude": 4.4025,
+}
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    async_add_entities([HebrewDateSensor()])
+    async_add_entities([ZmanimSensor()])
 
 
-class HebrewDateSensor(SensorEntity):
-    _attr_name = "Hebrew Date"
-    _attr_unique_id = "hebrew_date"
+class ZmanimSensor(SensorEntity):
+    _attr_name = "Zmanim"
+    _attr_unique_id = "zmanim_engine"
 
     @property
     def native_value(self):
-        now = datetime.now()
+        data = calculate_zmanim(DEFAULT_CONFIG, date.today())
 
-        result = get_hebrew_date(now)
+        # simpele “main value”
+        return data["zmanim"]["shkia"]["time"]
 
-        return f"{result['hebrew_day']}/{result['hebrew_month']}/{result['hebrew_year']}"
+    @property
+    def extra_state_attributes(self):
+        return calculate_zmanim(DEFAULT_CONFIG, date.today())
