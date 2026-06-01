@@ -32,11 +32,14 @@ class ZmanimSensor(CoordinatorEntity, Entity):
     def unique_id(self):
         return f"zmanim_{self._key}"
 
-    @property
-    def state(self):
-        if not self.coordinator.data:
-            return None
-        return self.coordinator.data.get(self._key)
+  @property
+def state(self):
+    if not self.coordinator.data:
+        return None
+
+    value = self.coordinator.data.get(self._key)
+
+    return value.isoformat() if hasattr(value, "isoformat") else value
 
     @property
     def available(self):
