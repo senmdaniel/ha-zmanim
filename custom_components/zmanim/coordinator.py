@@ -1,12 +1,15 @@
 from datetime import timedelta
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+import logging
 from .utils import calculate_zmanim
+
+_LOGGER = logging.getLogger(__name__)
 
 class ZmanimCoordinator(DataUpdateCoordinator):
     def __init__(self, hass, lat, lon, method):
         super().__init__(
             hass,
-            logger=None,
+            _LOGGER,
             name="zmanim",
             update_interval=timedelta(minutes=30),
         )
@@ -16,4 +19,10 @@ class ZmanimCoordinator(DataUpdateCoordinator):
         self.method = method
 
     async def _async_update_data(self):
-        return calculate_zmanim(self.lat, self.lon, self.method)
+        try:
+            data = calculate_zmanim(self.lat, self.lon, self.method)
+            _LOGGER.debug("Zmanim data: %s", data)
+            return data
+        except Exception as e:
+            _LOGGER.exception("Error calculating zmanim: %s", e)
+            return {}
