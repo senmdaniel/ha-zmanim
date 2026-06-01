@@ -1,3 +1,7 @@
 DOMAIN = "zmanim"
-NAME = "Zmanim"
-VERSION = "1.0.0"
+
+CONF_LAT = "latitude"
+CONF_LON = "longitude"
+CONF_METHOD = "method"
+
+DEFAULT_METHOD = "gra"
