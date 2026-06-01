@@ -1,6 +1,7 @@
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import DOMAIN
+from datetime import datetime
 
 ZMANIM_KEYS = [
     "alot_hashachar",
@@ -13,12 +14,10 @@ ZMANIM_KEYS = [
 async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
-    entities = [
+    async_add_entities([
         ZmanimSensor(coordinator, key)
         for key in ZMANIM_KEYS
-    ]
-
-    async_add_entities(entities)
+    ])
 
 
 class ZmanimSensor(CoordinatorEntity, Entity):
@@ -36,7 +35,10 @@ class ZmanimSensor(CoordinatorEntity, Entity):
 
     @property
     def state(self):
-        return self.coordinator.data.get(self._key)
+        value = self.coordinator.data.get(self._key)
+        if isinstance(value, datetime):
+            return value.isoformat()
+        return value
 
     @property
     def device_class(self):
