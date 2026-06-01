@@ -4,17 +4,12 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, entry):
-    _LOGGER.error("ZMANIM INIT START")
+
+    _LOGGER.error("ZMANIM INIT START: %s", entry.data)
 
     hass.data.setdefault(DOMAIN, {})
 
     try:
-        lat = entry.data.get("latitude")
-        lon = entry.data.get("longitude")
-        method = entry.data.get("method", "gra")
-
-        _LOGGER.error("CONFIG: %s %s %s", lat, lon, method)
-
         from .coordinator import ZmanimCoordinator
 
         coordinator = ZmanimCoordinator(hass, entry.data)
@@ -24,7 +19,7 @@ async def async_setup_entry(hass, entry):
 
         await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
 
-        _LOGGER.error("ZMANIM INIT OK")
+        _LOGGER.error("ZMANIM INIT SUCCESS")
 
         return True
 
