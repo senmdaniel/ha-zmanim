@@ -9,17 +9,17 @@ class ZmanimConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             return self.async_create_entry(
                 title="Zmanim",
-                data={
-                    "latitude": float(user_input["latitude"]),
-                    "longitude": float(user_input["longitude"]),
-                    "method": user_input.get("method", DEFAULT_METHOD),
-                },
+                data=user_input,
             )
 
         schema = vol.Schema({
             vol.Required("latitude"): vol.Coerce(float),
             vol.Required("longitude"): vol.Coerce(float),
             vol.Optional("method", default=DEFAULT_METHOD): str,
+
+            # 🔥 LOXONE SETTINGS
+            vol.Optional("loxone_url"): str,
+            vol.Optional("enable_loxone", default=False): bool,
         })
 
         return self.async_show_form(step_id="user", data_schema=schema)
