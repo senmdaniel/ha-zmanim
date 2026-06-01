@@ -5,28 +5,23 @@ from .api import ZmanimView
 _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, entry):
-    """Set up Zmanim from a config entry."""
-    _LOGGER.error("ZMANIM INIT START: %s", entry.data)
+
+    _LOGGER.error("ZMANIM INIT START")
 
     hass.data.setdefault(DOMAIN, {})
 
-    try:
-        from .coordinator import ZmanimCoordinator
+    from .coordinator import ZmanimCoordinator
 
-        coordinator = ZmanimCoordinator(hass, entry.data)
-        await coordinator.async_config_entry_first_refresh()
+    coordinator = ZmanimCoordinator(hass, entry.data)
+    await coordinator.async_config_entry_first_refresh()
 
-        hass.data[DOMAIN][entry.entry_id] = coordinator
+    hass.data[DOMAIN][entry.entry_id] = coordinator
 
-        # API endpoint registreren
-        await hass.http.async_register_view(ZmanimView)
+    # 🔥 FIX: correct register (NO await)
+    hass.http.register_view(ZmanimView)
 
-        # Sensor platform setup
-        await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
+    await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
 
-        _LOGGER.error("ZMANIM INIT SUCCESS")
-        return True
+    _LOGGER.error("ZMANIM INIT SUCCESS")
 
-    except Exception as e:
-        _LOGGER.exception("ZMANIM INIT FAILED: %s", e)
-        return False
+    return True
