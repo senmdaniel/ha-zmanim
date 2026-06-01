@@ -4,8 +4,8 @@ from .const import DOMAIN
 async def async_setup_entry(hass: HomeAssistant, entry):
     hass.data.setdefault(DOMAIN, {})
 
-    lat = entry.data["latitude"]
-    lon = entry.data["longitude"]
+    lat = entry.data.get("latitude")
+    lon = entry.data.get("longitude")
     method = entry.data.get("method", "gra")
 
     from .coordinator import ZmanimCoordinator
