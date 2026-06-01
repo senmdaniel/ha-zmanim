@@ -34,8 +34,10 @@ class ZmanimSensor(CoordinatorEntity, Entity):
 
     @property
     def state(self):
+        if not self.coordinator.data:
+            return None
         return self.coordinator.data.get(self._key)
 
     @property
-    def device_class(self):
-        return "timestamp"
+    def available(self):
+        return bool(self.coordinator.data)
