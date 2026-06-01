@@ -1,34 +1,23 @@
-from datetime import timedelta
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+import aiohttp
 import logging
-from .utils import calculate_zmanim
 
 _LOGGER = logging.getLogger(__name__)
 
-class ZmanimCoordinator(DataUpdateCoordinator):
+class ZmanimCoordinator(...):
 
     def __init__(self, hass, config):
-        super().__init__(
-            hass,
-            _LOGGER,
-            name="zmanim",
-            update_interval=timedelta(minutes=5),
-        )
+        ...
+        self.loxone_url = config.get("loxone_url")
 
-        self.lat = config.get("latitude")
-        self.lon = config.get("longitude")
-        self.method = config.get("method", "gra")
+    async def _send_to_loxone(self, data):
+        if not self.loxone_url:
+            return
 
-    async def _async_update_data(self):
         try:
-            _LOGGER.debug("Calculating zmanim...")
-            return calculate_zmanim(self.lat, self.lon, self.method)
+            async with aiohttp.ClientSession() as session:
+                await session.post(
+                    self.loxone_url,
+                    json=data
+                )
         except Exception as e:
-            _LOGGER.exception("Zmanim error: %s", e)
-            return {
-                "alot_hashachar": None,
-                "netz": None,
-                "chatzot": None,
-                "shkia": None,
-                "tzeit": None,
-            }
+            _LOGGER.error("Loxone error: %s", e)
