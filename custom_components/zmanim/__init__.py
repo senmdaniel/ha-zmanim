@@ -19,8 +19,8 @@ async def async_setup_entry(hass, entry):
 
         hass.data[DOMAIN][entry.entry_id] = coordinator
 
-        # 🔥 REGISTER API VIEW (BELANGRIJK)
-        hass.http.register_view(ZmanimView)
+        # 🔥 CORRECT WAY (HA 2026)
+        await hass.http.async_register_view(ZmanimView)
 
         await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
 
