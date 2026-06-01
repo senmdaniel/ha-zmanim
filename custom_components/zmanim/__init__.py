@@ -1,6 +1,13 @@
 import logging
 from .const import DOMAIN
 
+from .api import ZmanimView
+
+async def async_setup_entry(hass, entry):
+    ...
+    hass.http.register_view(ZmanimView)
+    return True
+    
 _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, entry):
