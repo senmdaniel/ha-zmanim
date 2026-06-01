@@ -3,9 +3,9 @@ from homeassistant import config_entries
 from .const import DOMAIN, DEFAULT_METHOD
 
 class ZmanimConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Config flow voor Zmanim."""
 
     async def async_step_user(self, user_input=None):
-
         if user_input is not None:
             return self.async_create_entry(
                 title="Zmanim",
