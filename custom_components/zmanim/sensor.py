@@ -20,6 +20,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
 
 class ZmanimSensor(CoordinatorEntity, Entity):
+
     def __init__(self, coordinator, key):
         super().__init__(coordinator)
         self._key = key
@@ -32,15 +33,15 @@ class ZmanimSensor(CoordinatorEntity, Entity):
     def unique_id(self):
         return f"zmanim_{self._key}"
 
-  @property
-def state(self):
-    if not self.coordinator.data:
-        return None
+    @property
+    def state(self):
+        if not self.coordinator.data:
+            return None
 
-    value = self.coordinator.data.get(self._key)
+        value = self.coordinator.data.get(self._key)
 
-    return value.isoformat() if hasattr(value, "isoformat") else value
+        return value.isoformat() if hasattr(value, "isoformat") else value
 
     @property
     def available(self):
-        return bool(self.coordinator.data)
+        return self.coordinator.data is not None
