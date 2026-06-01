@@ -10,6 +10,7 @@ class ZmanimCoordinator(DataUpdateCoordinator):
             name="zmanim",
             update_interval=timedelta(minutes=30),
         )
+
         self.lat = lat
         self.lon = lon
         self.method = method
