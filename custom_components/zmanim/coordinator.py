@@ -11,7 +11,7 @@ class ZmanimCoordinator(DataUpdateCoordinator):
             hass,
             _LOGGER,
             name="zmanim",
-            update_interval=timedelta(minutes=30),
+            update_interval=timedelta(minutes=10),
         )
 
         self.lat = lat
@@ -20,7 +20,31 @@ class ZmanimCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         try:
-            return calculate_zmanim(self.lat, self.lon, self.method)
+            _LOGGER.warning("Updating Zmanim data...")
+
+            data = calculate_zmanim(self.lat, self.lon, self.method)
+
+            _LOGGER.warning("Zmanim data result: %s", data)
+
+            # 🔥 BELANGRIJK: nooit None teruggeven
+            if not data:
+                return {
+                    "alot_hashachar": None,
+                    "netz": None,
+                    "chatzot": None,
+                    "shkia": None,
+                    "tzeit": None,
+                }
+
+            return data
+
         except Exception as e:
             _LOGGER.exception("Zmanim calculation failed: %s", e)
-            return {}
+
+            return {
+                "alot_hashachar": None,
+                "netz": None,
+                "chatzot": None,
+                "shkia": None,
+                "tzeit": None,
+            }
