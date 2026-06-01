@@ -20,9 +20,7 @@ class ZmanimCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         try:
-            data = calculate_zmanim(self.lat, self.lon, self.method)
-            _LOGGER.debug("Zmanim data: %s", data)
-            return data
+            return calculate_zmanim(self.lat, self.lon, self.method)
         except Exception as e:
-            _LOGGER.exception("Error calculating zmanim: %s", e)
+            _LOGGER.exception("Zmanim calculation failed: %s", e)
             return {}
