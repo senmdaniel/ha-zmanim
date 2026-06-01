@@ -5,15 +5,20 @@ from .const import DOMAIN, DEFAULT_METHOD
 class ZmanimConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input=None):
+
         if user_input is not None:
             return self.async_create_entry(
                 title="Zmanim",
-                data=user_input,
+                data={
+                    "latitude": float(user_input["latitude"]),
+                    "longitude": float(user_input["longitude"]),
+                    "method": user_input.get("method", DEFAULT_METHOD),
+                },
             )
 
         schema = vol.Schema({
-            vol.Required("latitude"): float,
-            vol.Required("longitude"): float,
+            vol.Required("latitude"): vol.Coerce(float),
+            vol.Required("longitude"): vol.Coerce(float),
             vol.Optional("method", default=DEFAULT_METHOD): str,
         })
 
