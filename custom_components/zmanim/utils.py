@@ -10,7 +10,7 @@ def calculate_zmanim(lat: float, lon: float, method: str = "gra", target_date: d
     tz = ZoneInfo("Europe/Paris")
 
     location = LocationInfo(
-        name="Home",
+        name="home",
         region="",
         timezone="Europe/Paris",
         latitude=lat,
@@ -20,9 +20,9 @@ def calculate_zmanim(lat: float, lon: float, method: str = "gra", target_date: d
     s = sun(location.observer, date=target_date, tzinfo=tz)
 
     return {
-        "alot_hashachar": s["dawn"],
-        "netz": s["sunrise"],
-        "chatzot": s["noon"],
-        "shkia": s["sunset"],
-        "tzeit": s["dusk"],
+        "alot_hashachar": s.get("dawn"),
+        "netz": s.get("sunrise"),
+        "chatzot": s.get("noon"),
+        "shkia": s.get("sunset"),
+        "tzeit": s.get("dusk"),
     }
