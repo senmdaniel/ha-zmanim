@@ -2,7 +2,6 @@ from datetime import timedelta
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 import logging
 from .utils import calculate_zmanim
-from .loxone import LoxoneExporter
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,20 +15,20 @@ class ZmanimCoordinator(DataUpdateCoordinator):
             update_interval=timedelta(minutes=5),
         )
 
-        self.lat = config["latitude"]
-        self.lon = config["longitude"]
+        self.lat = config.get("latitude")
+        self.lon = config.get("longitude")
         self.method = config.get("method", "gra")
 
-        self.loxone_enabled = config.get("enable_loxone", False)
-        self.loxone_url = config.get("loxone_url")
-
-        self.loxone = LoxoneExporter(self.loxone_url) if self.loxone_url else None
-
     async def _async_update_data(self):
-        data = calculate_zmanim(self.lat, self.lon, self.method)
-
-        # 🔥 AUTO LOXONE EXPORT
-        if self.loxone_enabled and self.loxone:
-            await self.loxone.send(data)
-
-        return data
+        try:
+            _LOGGER.debug("Calculating zmanim...")
+            return calculate_zmanim(self.lat, self.lon, self.method)
+        except Exception as e:
+            _LOGGER.exception("Zmanim error: %s", e)
+            return {
+                "alot_hashachar": None,
+                "netz": None,
+                "chatzot": None,
+                "shkia": None,
+                "tzeit": None,
+            }
