@@ -1,20 +1,33 @@
-from homeassistant.core import HomeAssistant
+import logging
 from .const import DOMAIN
 
-async def async_setup_entry(hass: HomeAssistant, entry):
+_LOGGER = logging.getLogger(__name__)
+
+async def async_setup_entry(hass, entry):
+    _LOGGER.error("ZMANIM INIT START")
+
     hass.data.setdefault(DOMAIN, {})
 
-    lat = entry.data.get("latitude")
-    lon = entry.data.get("longitude")
-    method = entry.data.get("method", "gra")
+    try:
+        lat = entry.data.get("latitude")
+        lon = entry.data.get("longitude")
+        method = entry.data.get("method", "gra")
 
-    from .coordinator import ZmanimCoordinator
+        _LOGGER.error("CONFIG: %s %s %s", lat, lon, method)
 
-    coordinator = ZmanimCoordinator(hass, lat, lon, method)
-    await coordinator.async_config_entry_first_refresh()
+        from .coordinator import ZmanimCoordinator
 
-    hass.data[DOMAIN][entry.entry_id] = coordinator
+        coordinator = ZmanimCoordinator(hass, entry.data)
+        await coordinator.async_config_entry_first_refresh()
 
-    await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
+        hass.data[DOMAIN][entry.entry_id] = coordinator
 
-    return True
+        await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
+
+        _LOGGER.error("ZMANIM INIT OK")
+
+        return True
+
+    except Exception as e:
+        _LOGGER.exception("ZMANIM INIT FAILED: %s", e)
+        return False
